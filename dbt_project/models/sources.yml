@@ -1,0 +1,50 @@
+version: 2
+
+sources:
+  - name: dbt_demo
+    schema: public
+    description: "Demo data sources"
+    tables:
+      - name: customers
+        description: "Raw customer data"
+        columns:
+          - name: id
+            description: "Customer ID"
+            tests:
+              - unique
+              - not_null
+          - name: name
+            description: "Customer name"
+            tests:
+              - not_null
+          - name: email
+            description: "Customer email"
+            tests:
+              - not_null
+          - name: city
+            description: "Customer city"
+          - name: created_at
+            description: "Customer creation timestamp"
+      
+      - name: orders
+        description: "Raw order data"
+        columns:
+          - name: id
+            description: "Order ID"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: "Customer ID (foreign key)"
+            tests:
+              - not_null
+          - name: order_date
+            description: "Order date"
+            tests:
+              - not_null
+          - name: total_amount
+            description: "Order total amount"
+            tests:
+              - not_null
+          - name: status
+            description: "Order status" 

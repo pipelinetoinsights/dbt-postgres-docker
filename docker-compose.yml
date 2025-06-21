@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: dbt_postgres
+    environment:
+      POSTGRES_DB: dbt_demo
+      POSTGRES_USER: dbt_user
+      POSTGRES_PASSWORD: dbt_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./seeds:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dbt_user -d dbt_demo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  dbt:
+    build:
+      context: ./dbt_project
+      dockerfile: Dockerfile
+    container_name: dbt_container
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DBT_PROFILES_DIR: /dbt/profiles
+      DBT_PROJECT_DIR: /dbt
+    volumes:
+      - ./dbt_project:/dbt
+      - ./profiles.yml:/dbt/profiles/profiles.yml
+    working_dir: /dbt
+    command: tail -f /dev/null  # Keep container running
+
+volumes:
+  postgres_data: 

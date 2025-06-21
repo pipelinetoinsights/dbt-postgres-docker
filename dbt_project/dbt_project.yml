@@ -1,0 +1,30 @@
+name: 'dbt_demo'
+version: '1.0.0'
+config-version: 2
+
+profile: 'dbt_demo'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  dbt_demo:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+
+seeds:
+  dbt_demo:
+    +column_types:
+      id: integer
+      created_at: timestamp 

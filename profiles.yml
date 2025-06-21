@@ -1,0 +1,14 @@
+dbt_demo:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres
+      port: 5432
+      user: dbt_user
+      password: dbt_password
+      dbname: dbt_demo
+      schema: public
+      threads: 4
+      keepalives_idle: 0
+      search_path: public 
