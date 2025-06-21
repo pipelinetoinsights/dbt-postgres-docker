@@ -75,7 +75,7 @@ SELECT * FROM dim_customers LIMIT 5;
 - **Schema issues:** By default, seeds are loaded into the `public` schema. Check your `sources.yml` for correct schema.
 - **psql not found:** Use the Postgres container, not the dbt container, to access the database directly.
 
-## Customization
+## Customisation
 - Add more seed files to `dbt_project/seeds/`
 - Add new models to `dbt_project/models/`
 - Update `dbt_project.yml` and `profiles.yml` as needed
